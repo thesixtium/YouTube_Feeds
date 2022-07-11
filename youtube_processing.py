@@ -48,3 +48,22 @@ def get_video_date_time(video_url, driver):
     date = driver.find_element_by_css_selector("span#dot+yt-formatted-string[class$='ytd-video-primary-info-renderer']")
 
     return parser.parse(date.text, fuzzy=True)
+
+def get_channel_name_from_url(channel_url):
+    chrome_options = Options()
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(options=chrome_options)
+
+    driver.get(f"{channel_url}")
+    WebDriverWait(driver, 20).until(EC.presence_of_element_located(
+            (By.XPATH, "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-browse/div[3]/ytd-c4-tabbed-header-renderer/tp-yt-app-header-layout/div/tp-yt-app-header/div[2]/div[2]/div/div[1]/div/div[1]/ytd-channel-name/div/div/yt-formatted-string")))
+
+    date = driver.find_element_by_xpath(
+            "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-browse/div[3]/ytd-c4-tabbed-header-renderer/tp-yt-app-header-layout/div/tp-yt-app-header/div[2]/div[2]/div/div[1]/div/div[1]/ytd-channel-name/div/div/yt-formatted-string")
+
+    return_thing = date.text
+
+    driver.quit()
+
+    return return_thing
