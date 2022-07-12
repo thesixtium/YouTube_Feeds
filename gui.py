@@ -7,5 +7,11 @@ class Gui:
     feed = None
 
     def __init__(self):
-        self.window = tk.Tk()
         self.feed = Feeds()
+        self.window = tk.Tk()
+        self.setup()
+        self.window.mainloop()
+
+    def setup(self):
+        greeting = tk.Label(text="Hello, Tkinter")
+        greeting.pack()
