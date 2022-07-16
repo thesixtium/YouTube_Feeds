@@ -13,5 +13,28 @@ class Gui:
         self.window.mainloop()
 
     def setup(self):
-        greeting = tk.Label(text="Hello, Tkinter")
+        self.window.geometry("400x400")
+        options = self.feed.list_feeds()
+
+        clicked = tk.StringVar()
+        clicked.set("default")
+
+        def show():
+            label.config(text=clicked.get())
+
+        dropdown = tk.OptionMenu(self.window, clicked, *options)
+        dropdown.pack()
+
+        button = tk.Button(self.window, text="click me", command=show).pack()
+
+        greeting = tk.Label(text="YouTube Feeds")
         greeting.pack()
+
+        label = tk.Label(self.window, text=" ")
+        label.pack()
+
+        feed_select_frame = tk.Frame(
+            master=self.window,
+            relief=tk.RAISED,
+            borderwidth=1
+        )
